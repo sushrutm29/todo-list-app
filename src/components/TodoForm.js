@@ -27,7 +27,7 @@ const TodoForm = () => {
     return(
         <div className="todoFormComponent">
             <form className="todo-input-form" onSubmit={addTodo}>
-                <TextField id="standard-basic" label="Enter Todo" value={todoInput} onChange={(e)=>setTodoInput(e.target.value)}/>
+                <TextField id="standard-basic" label="Enter Todo" value={todoInput} onChange={(e)=>setTodoInput(e.target.value)} inputProps={{maxLength: 35}}/>
                 <Button variant="contained" color="primary" type="submit" className={classes.todoAddButton}>Add Todo</Button>
             </form>
         </div>

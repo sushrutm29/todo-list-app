@@ -13,6 +13,7 @@
 .todoListComponent{
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   margin: 10px;
 }
 
@@ -21,10 +22,6 @@
   flex-direction: column;
   align-items: center;
   row-gap: 8px;
-}
-
-.todo-title{
-  margin: 5px;
 }
 
 .homeComponent{

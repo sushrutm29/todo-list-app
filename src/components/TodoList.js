@@ -1,9 +1,11 @@
+import { List } from '@material-ui/core';
 import React, {useState, useEffect} from 'react';
 import { db } from "../firebase/firebase_config";
 import TodoListItem from './TodoListItem';
 
 function TodoList(){
     const [todoList, setTodoList] = useState([]);
+    let todoListItems = null;
 
     useEffect(() => {
         getTodos();
@@ -20,11 +22,15 @@ function TodoList(){
         });
     }
 
+    todoListItems = todoList.map((todo) => (
+        <TodoListItem todo={todo} />
+    ));
+
     return(
         <div className="todoListComponent">
-            {todoList.map((todo) => (
-                <TodoListItem todo={todo} />
-            ))}
+            <List>
+                {todoListItems}
+            </List>
         </div>
     );
 }

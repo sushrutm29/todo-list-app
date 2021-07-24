@@ -28,7 +28,7 @@ function CompletedList() {
     }
 
     completedListItems = completedList.map((todo) => (
-        <TodoListItem todo={todo} />
+        <TodoListItem todo={todo} key={todo.id}/>
     ));
 
     return (

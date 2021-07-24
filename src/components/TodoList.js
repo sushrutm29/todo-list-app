@@ -12,14 +12,6 @@ function TodoList(){
     }, []);
 
     const getTodos = () => {
-        // db.collection("todos").onSnapshot((querySnapshot) => {
-        //     let newTodoList = querySnapshot.docs.map((doc) => ({
-        //         "id": doc.id,
-        //         "title": doc.data().title,
-        //         "completed": doc.data().completed 
-        //     }));
-        //     setTodoList(newTodoList);
-        // });
         db.collection("todos").onSnapshot((querySnapshot) => {
             let newTodoList = querySnapshot.docs.flatMap((doc) => {
                 if(!doc.data().completed)
@@ -36,7 +28,7 @@ function TodoList(){
     }
 
     todoListItems = todoList.map((todo) => (
-        <TodoListItem todo={todo} />
+        <TodoListItem todo={todo} key={todo.id} />
     ));
 
     return(

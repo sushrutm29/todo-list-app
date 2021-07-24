@@ -12,12 +12,25 @@ function TodoList(){
     }, []);
 
     const getTodos = () => {
+        // db.collection("todos").onSnapshot((querySnapshot) => {
+        //     let newTodoList = querySnapshot.docs.map((doc) => ({
+        //         "id": doc.id,
+        //         "title": doc.data().title,
+        //         "completed": doc.data().completed 
+        //     }));
+        //     setTodoList(newTodoList);
+        // });
         db.collection("todos").onSnapshot((querySnapshot) => {
-            let newTodoList = querySnapshot.docs.map((doc) => ({
-                "id": doc.id,
-                "title": doc.data().title,
-                "completed": doc.data().completed 
-            }));
+            let newTodoList = querySnapshot.docs.flatMap((doc) => {
+                if(!doc.data().completed)
+                    return  {
+                        "id": doc.id,
+                        "title": doc.data().title,
+                        "completed": doc.data().completed 
+                    };
+                else
+                    return [];
+            });
             setTodoList(newTodoList);
         });
     }

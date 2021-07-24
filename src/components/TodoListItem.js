@@ -1,8 +1,8 @@
 import { ListItem, ListItemText, Button} from '@material-ui/core'
-import React from 'react'
-import {CheckBox, Cancel} from '@material-ui/icons';
+import React, {useState} from 'react'
+import {CheckBox, Cancel, Edit} from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-import { green, red } from '@material-ui/core/colors';
+import { green, red, blue } from '@material-ui/core/colors';
 import { db } from "../firebase/firebase_config";
 
 const useStyles = makeStyles(() => ({
@@ -22,12 +22,20 @@ const useStyles = makeStyles(() => ({
             cursor: 'pointer'
         }
     },
+    editIcon: {
+        color: blue[500],
+        '&:hover':{
+            transition: "color 400ms",
+            color: blue[900],
+            cursor: 'pointer'
+        }
+    },
     todoListItem: {
-        width: '28vw'
+        width: '35vw'
     },
     listItemText: {
         margin: '2px 5px',
-        width: '10vw'
+        width: '20vw'
     }
   }));
 
@@ -35,6 +43,7 @@ function TodoListItem(props) {
     const classes = useStyles();
     let itemTextComplete = null;
     let buttonTextComplete = null;
+    const [openEditModal, setOpenEditModal] = useState(false);
 
     const toggleComplete = () => {
         db.collection("todos").doc(props.todo.id).update({
@@ -46,17 +55,24 @@ function TodoListItem(props) {
         db.collection("todos").doc(props.todo.id).delete();
     }
 
+    const handleEdit = () => {
+        setOpenEditModal(true);
+    }
+
     itemTextComplete = props.todo.completed? "Completed" : "In Progress";
     buttonTextComplete = 
         props.todo.completed? 
-            <Button color="primary" onClick={toggleComplete}>Mark incomplete</Button> : 
-            <CheckBox className={classes.completeIcon} onClick={toggleComplete}/>
+            <Button color="primary" onClick={toggleComplete}>Mark incomplete</Button>: 
+            <div>
+                <CheckBox className={classes.completeIcon} onClick={toggleComplete}/>
+                <Edit className={classes.editIcon} onClick={handleEdit}/>
+                <Cancel className={classes.deleteIcon} onClick={deleteTodo}/>
+            </div>
 
     return (
         <ListItem className={classes.todoListItem}>
             <ListItemText primary={props.todo.title} secondary={itemTextComplete} className={classes.listItemText}/>
             {buttonTextComplete}
-            <Cancel className={classes.deleteIcon} onClick={deleteTodo}/>
         </ListItem>
     )
 }

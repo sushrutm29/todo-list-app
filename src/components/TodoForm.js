@@ -7,7 +7,10 @@ import firebase from "firebase";
 const useStyles = makeStyles({
     todoAddButton: {
         padding: "3px 6px"
-    } 
+    },
+    todoAddText: {
+        width: "150%"
+    }
 });
 
 const TodoForm = () => {
@@ -27,7 +30,7 @@ const TodoForm = () => {
     return(
         <div className="todoFormComponent">
             <form className="todo-input-form" onSubmit={addTodo}>
-                <TextField id="standard-basic" label="Enter Todo" value={todoInput} onChange={(e)=>setTodoInput(e.target.value)} inputProps={{maxLength: 32}}/>
+                <TextField id="standard-basic" label="Enter Todo" className={classes.todoAddText} value={todoInput} onChange={(e)=>setTodoInput(e.target.value)} inputProps={{maxLength: 32}}/>
                 <Button variant="contained" color="primary" type="submit" className={classes.todoAddButton}>Add Todo</Button>
             </form>
         </div>

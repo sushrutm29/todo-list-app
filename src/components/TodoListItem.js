@@ -1,11 +1,12 @@
-import { ListItem, ListItemText, Button} from '@material-ui/core'
+import { ListItem, ListItemText, Button, Modal, Fade, Backdrop} from '@material-ui/core'
 import React, {useState} from 'react'
 import {CheckBox, Cancel, Edit} from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { green, red, blue } from '@material-ui/core/colors';
 import { db } from "../firebase/firebase_config";
+import EditTodo from './EditTodo';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     completeIcon: {
         color: green[500],
         '&:hover':{
@@ -43,7 +44,7 @@ function TodoListItem(props) {
     const classes = useStyles();
     let itemTextComplete = null;
     let buttonTextComplete = null;
-    const [openEditModal, setOpenEditModal] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const toggleComplete = () => {
         db.collection("todos").doc(props.todo.id).update({
@@ -55,8 +56,12 @@ function TodoListItem(props) {
         db.collection("todos").doc(props.todo.id).delete();
     }
 
-    const handleEdit = () => {
-        setOpenEditModal(true);
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
     }
 
     itemTextComplete = props.todo.completed? "Completed" : "In Progress";
@@ -65,14 +70,29 @@ function TodoListItem(props) {
             <Button color="primary" onClick={toggleComplete}>Mark incomplete</Button>: 
             <div>
                 <CheckBox className={classes.completeIcon} onClick={toggleComplete}/>
-                <Edit className={classes.editIcon} onClick={handleEdit}/>
+                <Edit className={classes.editIcon} onClick={handleOpen}/>
                 <Cancel className={classes.deleteIcon} onClick={deleteTodo}/>
             </div>
 
     return (
-        <ListItem className={classes.todoListItem}>
+        <ListItem className={classes.todoListItem} key={props.todo.id}>
             <ListItemText primary={props.todo.title} secondary={itemTextComplete} className={classes.listItemText}/>
             {buttonTextComplete}
+            <Modal
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            aria-labelledby="edit-modal-title"
+            aria-describedby="edit-modal-description"
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+                timeout: 300,
+            }}
+            >
+                <Fade in={open} timeout={ 100 }>
+                    <EditTodo todo={props.todo} close={handleClose}/>
+                </Fade>
+            </Modal>
         </ListItem>
     )
 }

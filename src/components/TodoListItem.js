@@ -90,7 +90,7 @@ function TodoListItem(props) {
             }}
             >
                 <Fade in={open} timeout={ 100 }>
-                    <EditTodo/>
+                    <EditTodo todo={props.todo} close={handleClose}/>
                 </Fade>
             </Modal>
         </ListItem>

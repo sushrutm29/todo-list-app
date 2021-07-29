@@ -1,7 +1,8 @@
 # Overview
 A web application to keep track of tasks to be completed
 
-# Built using Material-UI with a Firebase backend
+# Technology Stack
+Built using Material-UI in React with a Firebase backend
 
 # Getting Started
 Please follow the below instructions to run the application locally on your system

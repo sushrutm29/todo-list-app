@@ -33,7 +33,9 @@ function CompletedList() {
 
     return (
         <div className="completedListComponent">
-            <h2 className="completedListHeading">Completed Todos</h2>
+            {completedList.length > 0 &&
+                <h2 className="completedListHeading">Completed Todos</h2>
+            } 
             <List>
                 {completedListItems}
             </List>

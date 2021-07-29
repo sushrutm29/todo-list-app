@@ -26,17 +26,34 @@ const useStyles = makeStyles((theme) => ({
 function EditTodo(props) {
     const classes = useStyles();
     const [title, setTitle] = useState(props.todo.title);
+    const [error, setError] = useState(false);
 
     const editTodo = (e) => {
         e.preventDefault();
-        db.collection("todos").doc(props.todo.id).update({title: title});
-        props.close();
+        if(!title || title === "")
+            setError(true);
+        else{
+            db.collection("todos").doc(props.todo.id).update({title: title});
+            props.close();
+        }
     }
 
     return (
         <div className={classes.editTodoComponent}>
             <form className="todo-input-form" onSubmit={editTodo}>
-                <TextField id="standard-basic" className={classes.todoEditText} label="Enter Todo" value={title} onChange={(e)=>setTitle(e.target.value)} inputProps={{maxLength: 32}}/>
+                <TextField 
+                    error = {error}
+                    id="filled-error-helper-text" 
+                    helperText={error && "Please enter a title"}
+                    className={classes.todoEditText} 
+                    autoComplete='off'
+                    label="Enter Todo" 
+                    value={title} 
+                    onChange={(e)=>{
+                        setTitle(e.target.value);
+                        setError(false);
+                    }}
+                    inputProps={{maxLength: 32}}/>
                 <Button variant="contained" color="primary" type="submit" className={classes.todoEditButton}>Edit Todo</Button>
             </form>
         </div>

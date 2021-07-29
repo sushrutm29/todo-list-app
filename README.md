@@ -34,4 +34,4 @@ Built using Material-UI in React with a Firebase backend
 https://youtu.be/nkOLxkSoEKc
 
 # Author
-* Sushrut Madhavi
+Sushrut Madhavi

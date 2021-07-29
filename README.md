@@ -25,6 +25,7 @@ Please follow the below instructions to run the application locally on your syst
 
     ```http://localhost:3000```
 
+
 # Technology Stack
 Built using Material-UI in React with a Firebase backend
 
